@@ -4,7 +4,7 @@ var inquirer = require("inquirer");
 
 /** Global Variables **/
 
-/** MySQL Connection **/
+/** MySQL Connection Information**/
 var connection = mysql.createConnection(
 {
     host: "localhost",
@@ -20,3 +20,43 @@ var connection = mysql.createConnection(
     database: "bamazon"
 });
 
+/** MySQL Connection **/
+connection.connect(function(err)
+{
+    if (err) throw err;
+    console.log("connected as id " + connection.threadId);
+
+    viewItems();
+});
+
+function viewItems()
+{
+    connection.query("SELECT * FROM products", function (err, res)
+    {
+        if (err) throw err;
+
+        console.log("current item stock");
+
+        console.log(" | " + "Item ID" + " | " + "Product Name" + " | " + "Department Name" + " | " + "Item Price" + " | " + "Quantity" + " | ");
+        console.log(" | " + "-------" + " | " + "------------" + " | " + "---------------" + " | " + "----------" + " | " + "--------" + " | ");
+
+        for (var i = 0; i < res.length; i++)
+        {
+
+            console.log(" | " + (i+1) + "      " + " | " + res[i].product_name + " | " + res[i].department_name + " | " + res[i].price + " | " + res[i].stock_quantity + " | ");
+        }
+    })
+}
+
+function productSelection()
+{
+    inquirer.prompt([
+    {
+        name: "itemID",
+        message: "Please select an item ID for the item you want to purchase",
+
+    }]).then(function(value)
+    {
+
+    })
+}
