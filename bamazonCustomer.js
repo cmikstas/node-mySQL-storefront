@@ -17,5 +17,6 @@ var connection = mysql.createConnection(
     
     // Your password and database that is being accessed
     password: "root",
-    database: "greatbay_db"
+    database: "bamazon"
 });
+
