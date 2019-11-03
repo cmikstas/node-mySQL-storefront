@@ -3,6 +3,8 @@ var mysql = require("mysql");
 var inquirer = require("inquirer");
 
 /** Global Variables **/
+var itemID = 0;
+
 
 /** MySQL Connection Information**/
 var connection = mysql.createConnection(
@@ -29,6 +31,8 @@ connection.connect(function(err)
     viewItems();
 });
 
+
+/** Function List **/
 function viewItems()
 {
     connection.query("SELECT * FROM products", function (err, res)
@@ -42,18 +46,40 @@ function viewItems()
 
         for (var i = 0; i < res.length; i++)
         {
-
             console.log(" | " + (i+1) + "      " + " | " + res[i].product_name + " | " + res[i].department_name + " | " + res[i].price + " | " + res[i].stock_quantity + " | ");
         }
+
+        console.log("\n");
+
+        productSelection(res);
     })
 }
 
-function productSelection()
+function productSelection(res)
 {
     inquirer.prompt([
     {
         name: "itemID",
-        message: "Please select an item ID for the item you want to purchase",
+        message: "Please select the item ID of the item you want to purchase",
+
+        validate: function(value)
+        {
+            value = parseInt(value);
+
+            if (isNaN(value))
+            {
+                return false;
+            }
+
+            if (value <= res.length)
+            {
+                itemID = value;
+                //console.log(itemID);
+                return true;
+            }
+
+            return false;
+        }
 
     }]).then(function(value)
     {
