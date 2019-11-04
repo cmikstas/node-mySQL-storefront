@@ -50,7 +50,7 @@ function managerOptions()
                 return showProducts();
 
             case "View Low Inventory":
-                return;
+                return showLowInv();
 
             case "Add to Inventory":
                 return;
@@ -72,6 +72,27 @@ function showProducts()
 
         console.log("Current Item Stock");
 
+        console.log(" | " + "Item ID" + " | " + "Product Name" + " | " + "Department Name" + " | " + "Item Price" + " | " + "Quantity" + " | ");
+        console.log(" | " + "-------" + " | " + "------------" + " | " + "---------------" + " | " + "----------" + " | " + "--------" + " | ");
+
+        for (var i = 0; i < res.length; i++)
+        {
+            console.log(" | " + (i+1) + "      " + " | " + res[i].product_name + " | " + res[i].department_name + " | " + res[i].price + " | " + res[i].stock_quantity + " | ");
+        }
+
+        console.log("\n");
+        connection.end();
+    })
+}
+
+function showLowInv()
+{
+    connection.query("SELECT * FROM products WHERE stock_quantity <=5", function (err, res)
+    {
+        if (err) throw err;
+
+        console.log("ITEMS WITH LOW INVENTORY");
+        console.log("------------------------");
         console.log(" | " + "Item ID" + " | " + "Product Name" + " | " + "Department Name" + " | " + "Item Price" + " | " + "Quantity" + " | ");
         console.log(" | " + "-------" + " | " + "------------" + " | " + "---------------" + " | " + "----------" + " | " + "--------" + " | ");
 
