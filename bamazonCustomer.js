@@ -41,7 +41,7 @@ function viewItems()
     {
         if (err) throw err;
 
-        console.log("current item stock");
+        console.log("Current Item Stock");
 
         console.log(" | " + "Item ID" + " | " + "Product Name" + " | " + "Department Name" + " | " + "Item Price" + " | " + "Quantity" + " | ");
         console.log(" | " + "-------" + " | " + "------------" + " | " + "---------------" + " | " + "----------" + " | " + "--------" + " | ");
