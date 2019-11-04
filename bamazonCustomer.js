@@ -139,4 +139,5 @@ function stockQuantityUpdate()
     
     purchaseTotal = amountOrdered * itemPrice;
     console.log("Your order total is: " + "$" + purchaseTotal);
+    connection.end();
 }
