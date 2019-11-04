@@ -4,7 +4,8 @@ var inquirer = require("inquirer");
 
 /** Global Variables **/
 var itemID = 0;
-
+var itemStock = 0;
+var itemPrice = 0;
 
 /** MySQL Connection Information**/
 var connection = mysql.createConnection(
@@ -64,22 +65,57 @@ function productSelection(res)
 
         validate: function(value)
         {
-            value = parseInt(value);
+            var value1 = parseInt(value);
 
-            if (isNaN(value))
+            if (isNaN(value1))
             {
                 return false;
             }
 
-            if (value <= res.length)
+            if (value1 <= res.length)
             {
-                itemID = value;
-                //console.log(itemID);
+                itemID = value1;
                 return true;
             }
 
             return false;
         }
+    },
+    {
+        name: "itemCount",
+        message: "How many would you like to purchase?",
+
+        validate: function(value)
+        {
+            var value2 = parseInt(value);
+            itemStock = res[itemID-1].stock_quantity;
+
+            if (isNaN(value2) || value2 > itemStock)
+            {
+                if (isNaN(value2))
+                {
+                    console.log("\n" + "Invalid selection. Please try again." + "\n");
+                    return false;
+                }
+
+                else if (value2 > itemStock)
+                {
+                    console.log("\n" + "Insufficient quantity. Please select again." + "\n");
+                    return false;
+                }
+            }
+
+            if (value2 <= itemStock)
+            {
+                itemStock = itemStock - value2;
+                itemPrice = res[itemID-1].price;
+                //console.log("\n" + "Stock: " + itemStock +  " & " + "Price: " + itemPrice);
+                return true;
+            }
+
+            return false;
+        }
+
 
     }]).then(function(value)
     {
