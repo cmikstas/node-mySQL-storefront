@@ -3,9 +3,10 @@ var mysql = require("mysql");
 var inquirer = require("inquirer");
 
 /** Global Variables **/
-var itemID = 0;
+var itemNumber = 0;
 var itemStock = 0;
 var itemPrice = 0;
+var purchaseTotal = 0;
 
 /** MySQL Connection Information**/
 var connection = mysql.createConnection(
@@ -74,7 +75,7 @@ function productSelection(res)
 
             if (value1 <= res.length)
             {
-                itemID = value1;
+                itemNumber = value1;
                 return true;
             }
 
@@ -88,7 +89,7 @@ function productSelection(res)
         validate: function(value)
         {
             var value2 = parseInt(value);
-            itemStock = res[itemID-1].stock_quantity;
+            itemStock = res[itemNumber-1].stock_quantity;
 
             if (isNaN(value2) || value2 > itemStock)
             {
@@ -107,18 +108,35 @@ function productSelection(res)
 
             if (value2 <= itemStock)
             {
+                idNumber = res[itemNumber - 1].item_id;
+                amountOrdered = value2;
                 itemStock = itemStock - value2;
-                itemPrice = res[itemID-1].price;
+                itemPrice = res[itemNumber - 1].price;
                 //console.log("\n" + "Stock: " + itemStock +  " & " + "Price: " + itemPrice);
                 return true;
             }
 
             return false;
         }
-
-
     }]).then(function(value)
     {
-
+        stockQuantityUpdate();
     })
+}
+
+function stockQuantityUpdate()
+{
+    var query = connection.query(
+        "UPDATE products SET ? WHERE ?",
+        [
+          {
+            stock_quantity: itemStock
+          },
+          {
+            item_id: idNumber
+          }
+    ])
+    
+    purchaseTotal = amountOrdered * itemPrice;
+    console.log("Your order total is: " + "$" + purchaseTotal);
 }
