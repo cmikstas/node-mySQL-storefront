@@ -76,7 +76,7 @@ function showInv()
         const PRICELENGTH = 11;
         const QUANTITYLENGTH = 10;
 
-        console.log("Current Item Stock");
+        console.log("\n" + "Current Item Stock");
 
         console.log("| Item ID | Product Name                                  | Department Name                               | Item Price  | Quantity   |");
         console.log("| ------- | --------------------------------------------- | --------------------------------------------- | ----------- | ---------- |");
@@ -131,8 +131,6 @@ function showInv()
 
             console.log("| " + itemString + "| " + productString + "| " + deptString + "| " + "$" + priceString + "| " + stockString + " |");
         }
-
-        //console.log("\n");
         connection.end();
     })
 }
@@ -149,7 +147,7 @@ function showLowInv()
         const PRICELENGTH = 11;
         const QUANTITYLENGTH = 10;
 
-        console.log("Current Item Stock");
+        console.log("\n" + "Current Item Stock");
 
         console.log("| Item ID | Product Name                                  | Department Name                               | Item Price  | Quantity   |");
         console.log("| ------- | --------------------------------------------- | --------------------------------------------- | ----------- | ---------- |");
