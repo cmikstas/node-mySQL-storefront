@@ -126,15 +126,14 @@ function productSelection(res)
 
 function stockQuantityUpdate()
 {
-    var query = connection.query(
-        "UPDATE products SET ? WHERE ?",
-        [
-          {
+    connection.query("UPDATE products SET ? WHERE ?",
+    [
+        {
             stock_quantity: itemStock
-          },
-          {
+        },
+        {
             item_id: idNumber
-          }
+        }
     ])
     
     purchaseTotal = amountOrdered * itemPrice;
