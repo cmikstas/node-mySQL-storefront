@@ -70,17 +70,78 @@ function showInv()
     {
         if (err) throw err;
 
+        const ITEMIDLENGTH = 8;
+        const PRODUCTLENGTH = 46;
+        const DEPTLENGTH = 46;
+        const PRICELENGTH = 11;
+        const QUANTITYLENGTH = 10;
+
         console.log("Current Item Stock");
 
-        console.log(" | " + "Item ID" + " | " + "Product Name" + " | " + "Department Name" + " | " + "Item Price" + " | " + "Quantity" + " | ");
-        console.log(" | " + "-------" + " | " + "------------" + " | " + "---------------" + " | " + "----------" + " | " + "--------" + " | ");
+        console.log("| Item ID | Product Name                                  | Department Name                               | Item Price  | Quantity   |");
+        console.log("| ------- | --------------------------------------------- | --------------------------------------------- | ----------- | ---------- |");
 
-        for (var i = 0; i < res.length; i++)
+        
+
+        for (let i = 0; i < res.length; i++)
         {
-            console.log(" | " + (i+1) + "      " + " | " + res[i].product_name + " | " + res[i].department_name + " | " + res[i].price + " | " + res[i].stock_quantity + " | ");
+            let itemIDLength = res[i].item_id.toString().length;
+            //console.log(itemIDLength);
+            let productLength = res[i].product_name.length;
+            let deptLength = res[i].department_name.length;
+            let priceLength = res[i].price.toString().length;
+            let stockLength = res[i].stock_quantity.toString().length;
+
+            let itemPadding = ITEMIDLENGTH - itemIDLength;
+            let productPadding = PRODUCTLENGTH - productLength;
+            let deptPadding = DEPTLENGTH - deptLength;
+            let pricePadding = PRICELENGTH - priceLength;
+            let quantityPadding = QUANTITYLENGTH - stockLength;
+
+            let itemString = res[i].item_id.toString();
+            let productString = res[i].product_name;
+            let deptString = res[i].department_name;
+            let priceString = res[i].price.toString();
+            let stockString = res[i].stock_quantity.toString();
+
+            for (let j = 0; j < itemPadding; j++)
+            {
+                itemString += " ";
+            }
+
+            for (let j = 0; j < productPadding; j++)
+            {
+                productString += " ";
+            }
+
+            for (let j = 0; j < deptPadding; j++)
+            {
+                deptString += " ";
+            }
+
+            for (let j = 0; j < pricePadding; j++)
+            {
+                priceString += " ";
+            }
+
+            for (let j = 0; j < quantityPadding; j++)
+            {
+                stockString += " ";
+            }
+            /** 
+            console.log("ID Length: " + itemIDLength + 
+            "\n" + "Product Length: " + productLength + 
+            "\n" + "Dept Length: " + deptLength + 
+            "\n" + "Price Length: " + priceLength + 
+            "\n" + "Stock Length: " + stockLength + "\n");
+            */
+
+            //console.log(" | " + (res[i].item_id) + "      " + " | " + res[i].product_name + " | " + res[i].department_name + " | " + res[i].price + " | " + res[i].stock_quantity + " | ");
+
+            console.log("| " + itemString + "| " + productString + "| " + deptString + "| " + "$" + priceString + "| " + stockString + " |");
         }
 
-        console.log("\n");
+        //console.log("\n");
         connection.end();
     })
 }
