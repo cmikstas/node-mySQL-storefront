@@ -147,7 +147,7 @@ function showLowInv()
         const PRICELENGTH = 11;
         const QUANTITYLENGTH = 10;
 
-        console.log("\n" + "Current Item Stock");
+        console.log("\n" + "Low Item Stock");
 
         console.log("| Item ID | Product Name                                  | Department Name                               | Item Price  | Quantity   |");
         console.log("| ------- | --------------------------------------------- | --------------------------------------------- | ----------- | ---------- |");
